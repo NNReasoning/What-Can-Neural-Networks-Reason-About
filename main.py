@@ -298,7 +298,7 @@ for epoch in range(1, args.epochs + 1):
     train(epoch, train_datasets, subtype)
     validate(epoch, validation_datasets, subtype)
     test(epoch, test_datasets, subtype)
-    if epoch%args.log-interval == 0 and args.save_model:
+    if epoch%args.log_interval == 0 and args.save_model:
         save_checkpoint({
                 'epoch': epoch,
                 'state_dict': model.state_dict(),

@@ -30,6 +30,7 @@ class FCOutputModel(nn.Module):
         self.linears = nn.ModuleList([nn.Linear(input_dim, hidden_dim)])
         for layer in range(n_layer-2):
             self.linears.append(nn.Linear(hidden_dim, hidden_dim))
+        print(hidden_dim, output_dim)
         self.linears.append(nn.Linear(hidden_dim, output_dim))
 
     def forward(self, x):

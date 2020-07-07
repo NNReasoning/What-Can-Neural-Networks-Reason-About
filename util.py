@@ -16,7 +16,7 @@ def calc_output_size(args):
         answer_size = 2
     elif subtype == 15: # Monster trainer
         answer_size = args.max_level * args.map_width * args.map_dim + 1
-    return answer_size
+    return int(answer_size)
 
 def cast_pairs(y_arr, x_arr, mb): #returns yx
     # cast all relations in the form: relation from b -> a: [b's feature, a's feature]
