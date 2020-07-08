@@ -43,7 +43,7 @@ parser.add_argument('--mlp_dim', type=int, default=128, help='MLP dimension for 
 parser.add_argument('--aggregate', type=str, default="sum", choices=["sum", "max"], help='aggregate relations: sum or max')
 parser.add_argument('--drop_edges', type=float, default=0.0, help='randomly drop drop_edges percent edges, default 0')
 parser.add_argument('--n_dummy', type=int, default=0, help='number of dummy nodes for GNNs (default: 0)')
-parser.add_argument('--all_same', action='store_true', default=False, help='use one MLP for all relations')
+parser.add_argument('--all_same', action='store_false', default=False, help='use one MLP for all relations')
 parser.add_argument('--dummy_dir', action='store_true', default=False, help='use different MLP for relation a-b and b-a')
 parser.add_argument('--dummy_share', action='store_true', default=False, help='use the same MLP for all dummy nodes')
 parser.add_argument('--only_max_dummy', action='store_true', default=False, help='Only doing max when we are aggregating dummy nodes')
@@ -91,7 +91,7 @@ args.cuda = not args.no_cuda and torch.cuda.is_available()
 
 if args.subtype < 10: #0: Maximum value difference and 2: Furthest pair
     args.add_features = 2
-elif args.subtype == 12: # Subset sum
+elif args.subtype in [12, 15]: # Subset sum
     args.add_features = 0
 
 if args.subtype == 15: # Monster trainer
@@ -200,7 +200,8 @@ def train(epoch, dataset, subtype):
     running_loss = 0.0
     accuracys = []
     losses = []
-    for batch_idx in range(train_size // bs):
+    batches = max(1, train_size // bs)
+    for batch_idx in range(batches):
         tensor_data(data, batch_idx)
         accuracy, loss = model.train_(input_nodes, label)
         running_loss += loss.item()
@@ -227,7 +228,8 @@ def validate(epoch, dataset, subtype):
 
     accuracys = []
     losses = []
-    for batch_idx in range(test_size // bs):
+    batches = max(1, test_size // bs)
+    for batch_idx in range(batches):
         tensor_data(data, batch_idx)
         accuracy, loss = model.test_(input_nodes, label)
         accuracys.append(accuracy)
@@ -250,7 +252,8 @@ def test(epoch, dataset, subtype):
 
     accuracys = []
     losses = []
-    for batch_idx in range(test_size // bs):
+    batches = max(1, test_size // bs)
+    for batch_idx in range(batches):
         tensor_data(data, batch_idx)
         accuracy, loss = model.test_(input_nodes, label)
         accuracys.append(accuracy)

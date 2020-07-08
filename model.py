@@ -101,7 +101,7 @@ class GNN(BasicModel):
             for i in range(self.n_dummy):
                 self.MLPdios.append(torch.nn.ModuleList())
                 self.MLPodis.append(torch.nn.ModuleList())
-     
+        
         for layer in range(self.n_iter):
             if layer == 0:
                 self.MLP0.append(MLP(self.mlp_layer, (self.coord_size + self.add_features)*2, self.hidden_dim, self.hidden_dim))
