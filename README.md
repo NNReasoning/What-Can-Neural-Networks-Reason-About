@@ -20,10 +20,14 @@ Monster trainer: subtype 15
 - [pytorch 0.4.0](http://pytorch.org/)
 
 ## Usage
+- n_iter: number of message passing layers in GNN 
+- n\_objects: number of graph nodes in the input dataset 
+
+See appendix G for the set of hyperparameters we use for each task
+
 ### For tasks Furthest pair (subtype 0) and Maximum value difference (subtype 2): 
-K: number of animal types (6 by default)
-n\_objects: number of animals (25 by default)
-n_iter: number of message passing layers in GNN 
+- K: number of animal types (6 by default)
+- n\_objects: number of animals (25 by default)
 
 Use
 	$ python treasure\_generator.py --K=6 --n\_objects=25 --coord\_size=8 --age\_range=100 --coord\_range=20 
@@ -43,7 +47,8 @@ and
 	$ python main.py --model=$MODEL\_NAME --lr=$LEARNING_RATE --batch_size=$BATCH_SIZE --hidden_dim=$HIDDEN_DIMENSION --data=$DATA\_FILE.pickle --epochs=$EPOCHS --fc_output_layer=$NUMBER_OF_LAYERS_IN_OUTPUT_FC --mlp_layer=$NUMBER_OF_LAYERS_IN_GNN_AGGREGATION --n_iter=5 --n_objects=6 --coord_size=1 --subtype=12
 
 ### For task Monster trainer: 
-max_level: number of other objects (except self) in the monster trainer task
+- max_level: number of other objects (except self) in the monster trainer task
+
 Use
 	$ python monster_trainer_generator.py --max_level=10
 to generate the monster trainer dataset
